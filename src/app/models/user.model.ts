@@ -4,10 +4,31 @@ export namespace UserModel {
     id: number;
     username: string;
     password: string;
-    humanName: string;
+    human_name: string;
     country: string;
-    dateOfBirth: Date;
+    date_of_birth: string;
     role: Role;
+  }
+
+  export interface GetRequest {
+    id: number;
+  }
+
+  export interface CreateRequest {
+    username: string;
+    password: string;
+    human_name: string;
+    country: string;
+    date_of_birth: string;
+    role: Role;
+  }
+
+  export interface UpdateRequest extends CreateRequest {
+    id: number;
+  }
+
+  export interface DeleteRequest {
+    id: number;
   }
 
 }
