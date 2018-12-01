@@ -10,9 +10,13 @@ import {
   MatCardModule,
   MatChipsModule,
   MatDividerModule,
-  MatIconModule, MatListModule,
+  MatIconModule,
   MatMenuModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatListModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatCheckboxModule
 } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {UserService} from './services/user.service';
@@ -22,11 +26,18 @@ import {RoundService} from './services/round.service';
 import { CompetitionListComponent } from './ui-components/competition/competition-list/competition-list.component';
 import { RouterModule, Routes } from '@angular/router';
 import {appRoutes} from './services/routes';
+import { CompetitionCreateComponent } from './ui-components/competition/competition-create/competition-create.component';
+import { CompetitionEditComponent } from './ui-components/competition/competition-edit/competition-edit.component';
+import { CompetitionBaseComponent } from './ui-components/competition/competition-base/competition-base.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CompetitionListComponent
+    CompetitionListComponent,
+    CompetitionCreateComponent,
+    CompetitionEditComponent,
+    CompetitionBaseComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -36,6 +47,8 @@ import {appRoutes} from './services/routes';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbModule.forRoot(),
     MatIconModule,
     MatToolbarModule,
@@ -44,7 +57,13 @@ import {appRoutes} from './services/routes';
     MatCardModule,
     MatChipsModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule
   ],
   providers: [
     UserService,

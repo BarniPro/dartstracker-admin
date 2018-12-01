@@ -1,4 +1,8 @@
+import {UserModel} from './user.model';
+
 export namespace CompetitionModel {
+
+  import User = UserModel.User;
 
   export interface Competition {
     id: number;
@@ -6,6 +10,7 @@ export namespace CompetitionModel {
     country: string;
     start_date: string;
     end_date: string;
+    officials: User[];
   }
 
   export interface GetRequest {
@@ -17,6 +22,7 @@ export namespace CompetitionModel {
     country: string;
     start_date: String;
     end_date: String;
+    officials: User[];
   }
 
   export interface UpdateRequest extends CreateRequest {

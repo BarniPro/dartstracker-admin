@@ -1,3 +1,74 @@
-<p>
-  competition-base works!
-</p>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>{{title}}</span>
+    <span class="example-spacer"></span>
+    <button mat-button (click)="navigate('/competitions')">
+      <mat-icon>close</mat-icon>
+      <span class="pl-1">Discard</span>
+    </button>
+    <button mat-button (click)="saveCompetition()">
+      <mat-icon>done</mat-icon>
+      <span class="pl-1">Save</span>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="p-3">
+  <div class="row">
+    <div class="offset-md-1 col-md-10">
+      <form class="example-form">
+        <div class="row">
+          <!-- REGION CARD -->
+          <div class="col-md-6">
+            <mat-card class="example-card mb-3">
+              <h6>Basic Data</h6>
+              <div>
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Competition name">
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="example-full-width">
+                  <input type="text" placeholder="Country" aria-label="Country" matInput [formControl]="myControl"
+                         [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+                      {{country}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="w-100">
+                  <input matInput [matDatepicker]="picker" placeholder="Start date">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="w-100">
+                  <input matInput [matDatepicker]="picker2" placeholder="End date">
+                  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                  <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </mat-card>
+          </div>
+          <!-- END REGION CARD -->
+          <!-- REGION CARD -->
+          <div class="col-md-6">
+            <mat-card class="example-card">
+              <h6>Officials</h6>
+              <div *ngFor="let official of officials">
+                <mat-checkbox [(ngModel)]="official.selected"
+                              [ngModelOptions]="{standalone: true}">
+                  {{official.name}}
+                </mat-checkbox>
+              </div>
+            </mat-card>
+          </div>
+          <!-- END REGION CARD -->
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

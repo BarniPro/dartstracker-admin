@@ -3,6 +3,9 @@ import {CompetitionService} from '../../../services/competition.service';
 import {CompetitionModel} from '../../../models/competition.model';
 import Competition = CompetitionModel.Competition;
 import {countryList} from '../../../services/country';
+import {Router} from '@angular/router';
+import {UserModel} from '../../../models/user.model';
+import User = UserModel.User;
 
 @Component({
   selector: 'app-competition-list',
@@ -13,11 +16,24 @@ export class CompetitionListComponent implements OnInit {
 
   competitions: Competition[] = [];
 
-  constructor(private competitionService: CompetitionService) { }
+  constructor(private competitionService: CompetitionService,
+              private router: Router) { }
 
   ngOnInit() {
+    this.loadCompetitions();
+  }
+
+  private loadCompetitions() {
     this.competitionService.get().subscribe((competitions) => {
       this.competitions = competitions;
+    });
+  }
+
+  private deleteCompetition(id: number) {
+    this.competitionService.delete({
+      id: id
+    }).subscribe( () => {
+      this.loadCompetitions();
     });
   }
 
@@ -27,6 +43,18 @@ export class CompetitionListComponent implements OnInit {
       const ret = 'flag-icon-' + country.code.toLocaleLowerCase();
       return ret;
     }
+  }
+
+  getOfficialNames(officials: User[]): string {
+    const official_names: string[] = [];
+    officials.forEach((official) => {
+      official_names.push(official.human_name);
+    });
+    return official_names.join(', ');
+  }
+
+  navigate(url: string) {
+    this.router.navigateByUrl(url);
   }
 
 }

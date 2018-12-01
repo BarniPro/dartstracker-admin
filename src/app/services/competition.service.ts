@@ -43,14 +43,14 @@ export class CompetitionService {
   }
 
   update(request: CompetitionModel.UpdateRequest) {
-    const url = '${this.baseUrl}/${request.id}';
+    const url = this.baseUrl + '/' + request.id.toString();
     return this.http
       .put<Competition>(url, request, this.httpOptions)
       .pipe(map(data => data), catchError(this.handleError));
   }
 
   delete(request: CompetitionModel.DeleteRequest) {
-    const url = '${this.baseUrl}/${request.id}';
+    const url = this.baseUrl + '/' + request.id.toString();
     return this.http
       .delete<Competition>(url, this.httpOptions)
       .pipe(catchError(this.handleError));
