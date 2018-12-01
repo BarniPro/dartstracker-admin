@@ -5,18 +5,34 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {MatButtonModule, MatIconModule, MatMenuModule, MatToolbarModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatChipsModule,
+  MatDividerModule,
+  MatIconModule, MatListModule,
+  MatMenuModule,
+  MatToolbarModule
+} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {UserService} from './services/user.service';
 import {CompetitionService} from './services/competition.service';
 import {MatchService} from './services/match.service';
 import {RoundService} from './services/round.service';
+import { CompetitionListComponent } from './ui-components/competition/competition-list/competition-list.component';
+import { RouterModule, Routes } from '@angular/router';
+import {appRoutes} from './services/routes';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CompetitionListComponent
   ],
   imports: [
+    RouterModule.forRoot(
+    appRoutes,
+    { enableTracing: true }
+    ),
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -24,7 +40,11 @@ import {RoundService} from './services/round.service';
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCardModule,
+    MatChipsModule,
+    MatDividerModule,
+    MatListModule
   ],
   providers: [
     UserService,

@@ -1,0 +1,56 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>{{competitions.length}} competitions</span>
+    <span class="example-spacer"></span>
+    <button mat-button href="/">
+      <mat-icon>library_add</mat-icon>
+      <span class="pl-1">Add competition</span>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="p-3">
+  <div class="row">
+    <div class="offset-md-1 col-md-10">
+      <div class="row">
+        <!-- REGION COMPETITION CARD -->
+        <div class="col-md-4" *ngFor="let competition of competitions">
+          <mat-card class="example-card mb-5">
+            <mat-card-header>
+              <div mat-card-avatar class="flag-icon-background flag-icon-squared"
+                   [ngClass]="getCountryIconClass(competition.country)">
+              </div>
+              <mat-card-title>{{competition.name}}</mat-card-title>
+              <mat-card-subtitle>{{competition.country}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <mat-icon mat-list-icon>calendar_today</mat-icon>
+                  <h4 mat-line>{{competition.start_date}}</h4>
+                  <p mat-line> Start date</p>
+                </mat-list-item>
+                <mat-list-item>
+                  <mat-icon mat-list-icon>calendar_today</mat-icon>
+                  <h4 mat-line>{{competition.end_date}}</h4>
+                  <p mat-line> End date</p>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+              </mat-list>
+            </mat-card-content>
+            <mat-card-actions>
+              <div class="d-flex justify-content-between">
+                <div>
+                  <button mat-button>VIEW MATCHES</button>
+                  <button mat-button color="primary">EDIT</button>
+                </div>
+                <button mat-button color="warn">DELETE</button>
+              </div>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+        <!-- END REGION COMPETITION CARD -->
+      </div>
+    </div>
+  </div>
+</div>
