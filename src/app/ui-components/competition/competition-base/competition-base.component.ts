@@ -7,6 +7,8 @@ import {Observable} from 'rxjs';
 import {UserModel} from '../../../models/user.model';
 import User = UserModel.User;
 import {UserService} from '../../../services/user.service';
+import {CompetitionService} from '../../../services/competition.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-competition-base',
@@ -16,7 +18,8 @@ import {UserService} from '../../../services/user.service';
 export class CompetitionBaseComponent implements OnInit {
 
   constructor(private router: Router,
-              private userService: UserService) { }
+              private userService: UserService,
+              private competitionService: CompetitionService) { }
 
   myControl = new FormControl();
   @Input() title: string;
@@ -26,6 +29,12 @@ export class CompetitionBaseComponent implements OnInit {
 
   countryNames: string[] = [];
   filteredCountries: Observable<string[]>;
+
+  cName: string;
+  cCountry: string;
+  cStartDate: Date;
+  cEndDate: Date;
+  cOfficials: User[] = [];
 
   ngOnInit() {
     this.loadOfficials();
@@ -42,8 +51,7 @@ export class CompetitionBaseComponent implements OnInit {
       users.forEach((user) => {
         if (user.role === 'ROLE_OFFICIAL') {
           this.officials.push({
-            id: user.id,
-            name: user.human_name,
+            official: user,
             selected: false
           });
         }
@@ -72,12 +80,40 @@ export class CompetitionBaseComponent implements OnInit {
   }
 
   saveCompetition() {
+    this.officials.forEach((official) => {
+      if (official.selected) {
+        this.cOfficials.push(official.official);
+      }
+    });
+    this.competitionService.create({
+      name: this.cName,
+      country: this.cCountry,
+      start_date: moment(this.cStartDate).format('YYYY-MM-DD'),
+      end_date: moment(this.cEndDate).format('YYYY-MM-DD')
+    }).subscribe((competition) => {
+      this.setOfficials(competition.id);
+    });
+  }
 
+  setOfficials(competition_id: number) {
+    this.competitionService.removeOfficials({
+      competition_id: competition_id
+    }).subscribe(() => {
+      this.officials.forEach((official) => {
+        if (official.selected) {
+          this.competitionService.addOfficial({
+              competition_id: competition_id,
+            }, official.official
+          ).subscribe(() => {
+
+          });
+        }
+      });
+    });
   }
 }
 
 interface Official {
-  id: number;
-  name: string;
+  official: User;
   selected: boolean;
 }

@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {UserModel} from '../models/user.model';
 import {throwError as observableThrowError} from 'rxjs';
-import User = UserModel.User;
 import {catchError, map} from 'rxjs/operators';
 import {CompetitionModel} from '../models/competition.model';
 import Competition = CompetitionModel.Competition;
+import {UserModel} from '../models/user.model';
+import User = UserModel.User;
 
 @Injectable()
 export class CompetitionService {
@@ -36,9 +36,8 @@ export class CompetitionService {
   }
 
   create(request: CompetitionModel.CreateRequest) {
-    const url = '${this.baseUrl}';
     return this.http
-      .post<Competition>(url, request, this.httpOptions)
+      .post<Competition>(this.baseUrl, request, this.httpOptions)
       .pipe(map(data => data), catchError(this.handleError));
   }
 
@@ -60,5 +59,38 @@ export class CompetitionService {
     console.error(res.error || res.body.error);
     return observableThrowError(res.error || 'Server error');
   }
+
+  // editor-fold official controller
+
+  getOfficials(request: CompetitionModel.QueryOfficialsRequest) {
+    const url = this.baseUrl + '/' + request.competition_id + '/officials';
+    return this.http
+      .get<User[]>(url, this.httpOptions)
+      .pipe(map(data => data), catchError(this.handleError));
+  }
+
+  removeOfficials(request: CompetitionModel.RemoveOfficialsRequest) {
+    const url = this.baseUrl + '/' + request.competition_id + '/officials';
+    return this.http
+      .delete<User>(url, this.httpOptions)
+      .pipe(map(data => data), catchError(this.handleError));
+  }
+
+  addOfficial(request: CompetitionModel.AddOfficialRequest, official: User) {
+    const url = this.baseUrl + '/' + request.competition_id + '/officials';
+    return this.http
+      .post<User>(url, official, this.httpOptions)
+      .pipe(map(data => data), catchError(this.handleError));
+  }
+
+  removeOfficial(request: CompetitionModel.RemoveOfficialRequest) {
+    const url = this.baseUrl + '/' + request.competition_id + '/officials/' + request.id;
+    return this.http
+      .delete<Competition>(url, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  // editor-fold
+
 
 }

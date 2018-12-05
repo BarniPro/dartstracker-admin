@@ -29,11 +29,15 @@ export class CompetitionListComponent implements OnInit {
     });
   }
 
-  private deleteCompetition(id: number) {
-    this.competitionService.delete({
-      id: id
-    }).subscribe( () => {
-      this.loadCompetitions();
+  deleteCompetition(id: number) {
+    this.competitionService.removeOfficials({
+      competition_id: id
+    }).subscribe(() => {
+      this.competitionService.delete({
+        id: id
+      }).subscribe( () => {
+        this.loadCompetitions();
+      });
     });
   }
 
