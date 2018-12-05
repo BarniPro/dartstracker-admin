@@ -30,6 +30,14 @@ import { CompetitionCreateComponent } from './ui-components/competition/competit
 import { CompetitionEditComponent } from './ui-components/competition/competition-edit/competition-edit.component';
 import { CompetitionBaseComponent } from './ui-components/competition/competition-base/competition-base.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { MatchListComponent } from './ui-components/match/match-list/match-list.component';
+import { MatchCreateComponent } from './ui-components/match/match-create/match-create.component';
+import { MatchEditComponent } from './ui-components/match/match-edit/match-edit.component';
+import { MatchBaseComponent } from './ui-components/match/match-base/match-base.component';
+import { LoginComponent } from './ui-components/login/login.component';
+import { UserListComponent } from './ui-components/user/user-list/user-list.component';
+import { UserCreateComponent } from './ui-components/user/user-create/user-create.component';
+import { UserEditComponent } from './ui-components/user/user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +45,15 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     CompetitionListComponent,
     CompetitionCreateComponent,
     CompetitionEditComponent,
-    CompetitionBaseComponent
+    CompetitionBaseComponent,
+    MatchListComponent,
+    MatchCreateComponent,
+    MatchEditComponent,
+    MatchBaseComponent,
+    LoginComponent,
+    UserListComponent,
+    UserCreateComponent,
+    UserEditComponent
   ],
   imports: [
     RouterModule.forRoot(
