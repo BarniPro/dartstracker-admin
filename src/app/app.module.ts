@@ -16,7 +16,7 @@ import {
   MatListModule,
   MatFormFieldModule,
   MatInputModule,
-  MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatCheckboxModule
+  MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatCheckboxModule, MatTableModule, MatRadioModule
 } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {UserService} from './services/user.service';
@@ -35,9 +35,11 @@ import { MatchCreateComponent } from './ui-components/match/match-create/match-c
 import { MatchEditComponent } from './ui-components/match/match-edit/match-edit.component';
 import { MatchBaseComponent } from './ui-components/match/match-base/match-base.component';
 import { LoginComponent } from './ui-components/login/login.component';
-import { UserListComponent } from './ui-components/user/user-list/user-list.component';
+import { UserListComponent} from './ui-components/user/user-list/user-list.component';
 import { UserCreateComponent } from './ui-components/user/user-create/user-create.component';
 import { UserEditComponent } from './ui-components/user/user-edit/user-edit.component';
+import {RolePipe} from './services/role.pipe';
+import { UserBaseComponent } from './ui-components/user/user-base/user-base.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { UserEditComponent } from './ui-components/user/user-edit/user-edit.comp
     LoginComponent,
     UserListComponent,
     UserCreateComponent,
-    UserEditComponent
+    UserEditComponent,
+    RolePipe,
+    UserBaseComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -79,7 +83,9 @@ import { UserEditComponent } from './ui-components/user/user-edit/user-edit.comp
     MatAutocompleteModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTableModule,
+    MatRadioModule
   ],
   providers: [
     UserService,

@@ -27,21 +27,21 @@ export class UserService {
   }
 
   getOne(request: UserModel.GetRequest) {
-    const url = '${this.baseUrl}/${request.id}';
+    const url = this.baseUrl + '/' + request.id;
     return this.http
       .get<User>(url, this.httpOptions)
       .pipe(map(data => data), catchError(this.handleError));
   }
 
   create(request: UserModel.CreateRequest) {
-    const url = '${this.baseUrl}';
+    const url = this.baseUrl;
     return this.http
       .post<User>(url, request, this.httpOptions)
       .pipe(map(data => data), catchError(this.handleError));
   }
 
   update(request: UserModel.UpdateRequest) {
-    const url = '${this.baseUrl}/${request.id}';
+    const url = this.baseUrl + '/' + request.id;
     return this.http
       .put<User>(url, request, this.httpOptions)
       .pipe(map(data => data), catchError(this.handleError));

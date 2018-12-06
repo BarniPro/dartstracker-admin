@@ -40,8 +40,8 @@ export class CompetitionBaseComponent implements OnInit {
   cOfficials: User[] = [];
 
   ngOnInit() {
-    this.id = +this.activatedRoute.snapshot.paramMap.get('id');
     if (this.edit) {
+      this.id = +this.activatedRoute.snapshot.paramMap.get('id');
       this.loadCompetition(this.id);
     } else {
       this.loadOfficials();

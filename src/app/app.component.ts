@@ -5,6 +5,7 @@ import {UserService} from './services/user.service';
 import {CompetitionService} from './services/competition.service';
 import {CompetitionModel} from './models/competition.model';
 import Competition = CompetitionModel.Competition;
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -19,19 +20,13 @@ export class AppComponent implements OnInit {
   title = 'dartstracker-ui';
 
   constructor(private userService: UserService,
-              private competitionService: CompetitionService) {}
+              private competitionService: CompetitionService,
+              private router: Router) {}
 
   ngOnInit(): void {
-    this.userService.get().subscribe((users) => {
-      this.users = users;
-      console.log(this.users);
-      }
-    );
-    this.competitionService.get().subscribe((competitions) => {
-        this.competitions = competitions;
-        console.log(this.competitions);
-      }
-    );
+  }
 
+  navigate(url: string) {
+    this.router.navigateByUrl(url);
   }
 }

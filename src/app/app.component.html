@@ -1,20 +1,21 @@
 <mat-toolbar color="primary">
-  <button mat-button href="/">
+  <mat-icon class="mr-1">filter_tilt_shift</mat-icon>
+  <span class="pr-1">Official Darts Association</span>
+  <mat-icon class="pr-1">more_vert</mat-icon>
+  <button mat-button (click)="navigate('/competitions')">
     <mat-icon>home</mat-icon>
-    Issue tracker
+    Home
   </button>
-
-  <span class="fill-remaining-space" fxHide="false" fxHide.gt-sm></span>
-  <div fxLayout="row" fxShow="false" fxShow.gt-sm>
-    <button mat-button href="/issues">My issues</button>
-    <button mat-button href="/issues/add">New issues</button>
-  </div>
+  <span class="example-spacer" fxHide="false" fxHide.gt-sm></span>
+  <button mat-button (click)="navigate('/users')">
+    <mat-icon>person</mat-icon>
+    User management
+  </button>
   <button mat-icon-button [matMenuTriggerFor]="menu" fxHide="false" fxHide.gt-sm>
-    <mat-icon>menu</mat-icon>
+    <mat-icon>exit_to_app</mat-icon>
   </button>
 </mat-toolbar>
 <mat-menu xPosition="before" #menu="matMenu">
-  <button mat-menu-item href="/issues">My issues</button>
-  <button mat-menu-item href="/issues/add">New issues</button>
+  <button mat-menu-item href="/issues">Logout</button>
 </mat-menu>
 <router-outlet></router-outlet>
