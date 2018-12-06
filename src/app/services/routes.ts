@@ -6,7 +6,7 @@ import {CompetitionEditComponent} from '../ui-components/competition/competition
 export const appRoutes: Routes = [
   { path: 'competitions', component: CompetitionListComponent },
   { path: 'competitions/create', component: CompetitionCreateComponent },
-  { path: 'competitions/:id/create', component: CompetitionEditComponent },
+  { path: 'competitions/:id/edit', component: CompetitionEditComponent },
   { path: '',
     redirectTo: '/competitions',
     pathMatch: 'full'

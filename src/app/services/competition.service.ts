@@ -29,7 +29,7 @@ export class CompetitionService {
   }
 
   getOne(request: CompetitionModel.GetRequest) {
-    const url = '${this.baseUrl}/${request.id}';
+    const url = this.baseUrl + '/' + request.id.toString();
     return this.http
       .get<Competition>(url, this.httpOptions)
       .pipe(map(data => data), catchError(this.handleError));

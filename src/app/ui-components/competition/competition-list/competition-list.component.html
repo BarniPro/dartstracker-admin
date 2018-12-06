@@ -47,7 +47,7 @@
               <div class="d-flex justify-content-between">
                 <div>
                   <button mat-button>VIEW MATCHES</button>
-                  <button mat-button color="primary">EDIT</button>
+                  <button mat-button color="primary" (click)="navigate('/competitions/' + competition.id + '/edit')">EDIT</button>
                 </div>
                 <button mat-button color="warn" (click)="deleteCompetition(competition.id)">DELETE</button>
               </div>

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {countryList} from '../../../services/country';
 import {FormControl} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
@@ -9,6 +9,7 @@ import User = UserModel.User;
 import {UserService} from '../../../services/user.service';
 import {CompetitionService} from '../../../services/competition.service';
 import * as moment from 'moment';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'app-competition-base',
@@ -18,6 +19,7 @@ import * as moment from 'moment';
 export class CompetitionBaseComponent implements OnInit {
 
   constructor(private router: Router,
+              private activatedRoute: ActivatedRoute,
               private userService: UserService,
               private competitionService: CompetitionService) { }
 
@@ -30,6 +32,7 @@ export class CompetitionBaseComponent implements OnInit {
   countryNames: string[] = [];
   filteredCountries: Observable<string[]>;
 
+  id: number;
   cName: string;
   cCountry: string;
   cStartDate: Date;
@@ -37,7 +40,12 @@ export class CompetitionBaseComponent implements OnInit {
   cOfficials: User[] = [];
 
   ngOnInit() {
-    this.loadOfficials();
+    this.id = +this.activatedRoute.snapshot.paramMap.get('id');
+    if (this.edit) {
+      this.loadCompetition(this.id);
+    } else {
+      this.loadOfficials();
+    }
     this.loadFilteredCountries();
     this.loadCountryNames();
   }
@@ -46,7 +54,7 @@ export class CompetitionBaseComponent implements OnInit {
     this.router.navigateByUrl(url);
   }
 
-  loadOfficials() {
+  loadOfficials(officials?: User[]) {
     this.userService.get().subscribe((users) => {
       users.forEach((user) => {
         if (user.role === 'ROLE_OFFICIAL') {
@@ -56,6 +64,28 @@ export class CompetitionBaseComponent implements OnInit {
           });
         }
       });
+      if (officials) {
+        this.officials.forEach((official) => {
+          officials.forEach((selecetdOfficial) => {
+            if (official.official.id === selecetdOfficial.id) {
+              official.selected = true;
+            }
+          });
+        });
+      }
+    });
+  }
+
+  loadCompetition(competitionId: number) {
+    this.competitionService.getOne({
+      id: competitionId
+    }).subscribe((competition) => {
+      this.cName = competition.name;
+      this.cCountry = competition.country;
+      this.cStartDate = new Date(competition.start_date);
+      this.cEndDate = new Date(competition.end_date);
+      this.officials = [];
+      this.loadOfficials(competition.officials);
     });
   }
 
@@ -85,29 +115,43 @@ export class CompetitionBaseComponent implements OnInit {
         this.cOfficials.push(official.official);
       }
     });
-    this.competitionService.create({
-      name: this.cName,
-      country: this.cCountry,
-      start_date: moment(this.cStartDate).format('YYYY-MM-DD'),
-      end_date: moment(this.cEndDate).format('YYYY-MM-DD')
-    }).subscribe((competition) => {
-      this.setOfficials(competition.id);
-    });
+    if (this.edit) {
+      this.competitionService.update({
+        id: this.id,
+        name: this.cName,
+        country: this.cCountry,
+        start_date: moment(this.cStartDate).format('YYYY-MM-DD'),
+        end_date: moment(this.cEndDate).format('YYYY-MM-DD')
+      }).subscribe((competition) => {
+        this.setOfficials(competition.id);
+      });
+    } else {
+      this.competitionService.create({
+        name: this.cName,
+        country: this.cCountry,
+        start_date: moment(this.cStartDate).format('YYYY-MM-DD'),
+        end_date: moment(this.cEndDate).format('YYYY-MM-DD')
+      }).subscribe((competition) => {
+        this.setOfficials(competition.id);
+      });
+    }
   }
 
   setOfficials(competition_id: number) {
     this.competitionService.removeOfficials({
       competition_id: competition_id
     }).subscribe(() => {
+      const observables = [];
       this.officials.forEach((official) => {
         if (official.selected) {
-          this.competitionService.addOfficial({
+          observables.push(this.competitionService.addOfficial({
               competition_id: competition_id,
             }, official.official
-          ).subscribe(() => {
-
-          });
+          ));
         }
+      });
+      forkJoin(observables).subscribe(() => {
+        this.navigate('/competitions');
       });
     });
   }
