@@ -1,0 +1,8 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.result-text {
+  font-size: 36px;
+  font-weight: 500;
+}

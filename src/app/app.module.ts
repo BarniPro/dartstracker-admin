@@ -16,7 +16,14 @@ import {
   MatListModule,
   MatFormFieldModule,
   MatInputModule,
-  MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatCheckboxModule, MatTableModule, MatRadioModule
+  MatAutocompleteModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatCheckboxModule,
+  MatTableModule,
+  MatRadioModule,
+  MatSelect,
+  MatSelectModule
 } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {UserService} from './services/user.service';
@@ -85,7 +92,8 @@ import { UserBaseComponent } from './ui-components/user/user-base/user-base.comp
     MatNativeDateModule,
     MatCheckboxModule,
     MatTableModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSelectModule
   ],
   providers: [
     UserService,

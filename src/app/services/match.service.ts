@@ -21,14 +21,14 @@ export class MatchService {
   }
 
   get(request: MatchModel.QueryRequest) {
-    const url = '${this.baseUrl}/${request.competition_id}/matches';
+    const url = this.baseUrl + '/' + request.competition_id + '/matches';
     return this.http
       .get<Match[]>(url, this.httpOptions)
       .pipe(map(data => data), catchError(this.handleError));
   }
 
   getOne(request: MatchModel.GetRequest) {
-    const url = '${this.baseUrl}/${request.competition_id}/matches/${request.id}/';
+    const url = this.baseUrl + '/' + request.competition_id + '/matches/' + request.id;
     return this.http
       .get<Match>(url, this.httpOptions)
       .pipe(map(data => data), catchError(this.handleError));

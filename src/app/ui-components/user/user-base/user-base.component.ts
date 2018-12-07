@@ -54,6 +54,7 @@ export class UserBaseComponent implements OnInit {
     this.userService.getOne({
       id: userId
     }).subscribe((user) => {
+      this.password = user.password;
       this.username = user.username;
       this.human_name = user.human_name;
       this.country = user.country;

@@ -8,7 +8,6 @@ export namespace MatchModel {
   export interface Match {
     id: number;
     competition_id: number;
-    match_date: Date;
     player_one: UserModel.User;
     player_two: UserModel.User;
     player_one_score: number;
@@ -27,7 +26,6 @@ export namespace MatchModel {
 
   export interface CreateRequest {
     competition_id: number;
-    match_date: string;
     player_one: UserModel.User;
     player_two: UserModel.User;
     player_one_score: number;
