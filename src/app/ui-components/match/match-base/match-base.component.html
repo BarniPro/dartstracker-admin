@@ -18,31 +18,40 @@
       <form class="example-form">
         <div class="row">
           <!-- REGION CARD -->
-          <div class="col-md-6">
+          <form [formGroup]="form" class="col-md-6">
             <mat-card class="example-card mb-3">
               <h6>Basic Data</h6>
               <div>
                 <mat-form-field class="w-100">
-                  <mat-select [(ngModel)]="player_one" [compareWith]="compareUser" placeholder="Player 1"
-                              [ngModelOptions]="{standalone: true}">
+                  <mat-select [(ngModel)]="player_one" [compareWith]="compareUser" placeholder="Player 1" formControlName="player_one">
                     <mat-option *ngFor="let player of players" [value]="player">{{player.human_name}}</mat-option>
                   </mat-select>
+                  <div *ngIf="submitted && form.get('player_one').hasError('required')" class="invalid-feedback d-block">
+                    <div>Player 1 is required</div>
+                  </div>
                 </mat-form-field>
                 <p>Score: {{player_one_score + ''}}</p>
               </div>
               <div>
                 <mat-form-field class="w-100">
-                  <mat-select [(ngModel)]="player_two" [compareWith]="compareUser" placeholder="Player 2"
-                              [ngModelOptions]="{standalone: true}">
+                  <mat-select [(ngModel)]="player_two" [compareWith]="compareUser" placeholder="Player 2" formControlName="player_two">
                     <mat-option *ngFor="let player of players" [value]="player">{{player.human_name}}</mat-option>
                   </mat-select>
+                  <div *ngIf="submitted && form.get('player_two').hasError('required')" class="invalid-feedback d-block">
+                    <div>Player 2 is required</div>
+                  </div>
                 </mat-form-field>
                 <p>Score: {{player_two_score + ''}}</p>
               </div>
             </mat-card>
-          </div>
+          </form>
           <!-- END REGION CARD -->
           <!-- REGION CARD -->
+          <div class="col-md-6" *ngIf="!player_one || !player_two">
+            <mat-card class="example-card">
+              <h6 class="mb-3">Select players to add rounds!</h6>
+            </mat-card>
+          </div>
           <div class="col-md-6" *ngIf="player_one && player_two">
             <mat-card class="example-card">
               <h6 class="mb-3">Rounds</h6>

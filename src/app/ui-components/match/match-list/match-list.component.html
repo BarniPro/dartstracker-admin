@@ -40,7 +40,8 @@
             <mat-card-actions>
               <div class="d-flex justify-content-between">
                 <div>
-                  <button mat-button (click)="navigate('/competitions/' + competition_id + '/matches/' + match.id + '/detail')">VIEW RESULT</button>
+                  <!--DETAIL SCREEN WILL BE ADDED IF ENOUGH TIME-->
+                  <!--<button mat-button (click)="navigate('/competitions/' + competition_id + '/matches/' + match.id + '/detail')">VIEW RESULT</button>-->
                   <button mat-button color="primary" (click)="navigate('/competitions/' + competition_id + '/matches/' + match.id + '/edit')">EDIT</button>
                 </div>
                 <button mat-button color="warn" (click)="deleteMatch(match.id)">DELETE</button>

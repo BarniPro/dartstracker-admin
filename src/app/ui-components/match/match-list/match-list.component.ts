@@ -42,7 +42,12 @@ export class MatchListComponent implements OnInit {
   }
 
   deleteMatch(id: number) {
-
+    this.matchService.delete({
+      competition_id: this.competition_id,
+      id: id
+    }).subscribe(() => {
+      this.loadMatches();
+    });
   }
 
   navigate(url: string) {

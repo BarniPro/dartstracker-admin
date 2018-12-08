@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {countryList} from '../../../services/country';
-import {FormControl} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {UserModel} from '../../../models/user.model';
@@ -10,6 +10,7 @@ import {UserService} from '../../../services/user.service';
 import {CompetitionService} from '../../../services/competition.service';
 import * as moment from 'moment';
 import {forkJoin} from 'rxjs';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-competition-base',
@@ -18,14 +19,11 @@ import {forkJoin} from 'rxjs';
 })
 export class CompetitionBaseComponent implements OnInit {
 
-  constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private userService: UserService,
-              private competitionService: CompetitionService) { }
-
-  myControl = new FormControl();
   @Input() title: string;
   @Input() edit: boolean;
+
+  form: FormGroup;
+  submitted = false;
 
   officials: Official[] = [];
 
@@ -38,6 +36,22 @@ export class CompetitionBaseComponent implements OnInit {
   cStartDate: Date;
   cEndDate: Date;
   cOfficials: User[] = [];
+
+  constructor(private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private userService: UserService,
+              private competitionService: CompetitionService,
+              private fb: FormBuilder,
+              public snackBar: MatSnackBar) {
+    this.form = this.fb.group({
+      cName: ['', Validators.required],
+      cCountry: ['', Validators.required],
+      cStartDate: ['', Validators.required],
+      cEndDate: ['', Validators.required],
+    });
+  }
+
+  get f() { return this.form.controls; }
 
   ngOnInit() {
     if (this.edit) {
@@ -90,7 +104,7 @@ export class CompetitionBaseComponent implements OnInit {
   }
 
   loadFilteredCountries() {
-    this.filteredCountries = this.myControl.valueChanges
+    this.filteredCountries = this.form.get('cCountry').valueChanges
       .pipe(
         startWith(''),
         map(value => this._filter(value))
@@ -110,6 +124,16 @@ export class CompetitionBaseComponent implements OnInit {
   }
 
   saveCompetition() {
+    this.submitted = true;
+    if (this.form.invalid) {
+      return;
+    }
+    if (!this.officials.find(official => official.selected === true)) {
+      this.snackBar.open('Select at least one official to proceed!', 'OK', {
+        duration: 2000,
+      });
+      return;
+    }
     this.officials.forEach((official) => {
       if (official.selected) {
         this.cOfficials.push(official.official);

@@ -86,7 +86,7 @@ export class CompetitionService {
   removeOfficial(request: CompetitionModel.RemoveOfficialRequest) {
     const url = this.baseUrl + '/' + request.competition_id + '/officials/' + request.id;
     return this.http
-      .delete<Competition>(url, this.httpOptions)
+      .delete<User>(url, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 

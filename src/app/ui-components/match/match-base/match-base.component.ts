@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserModel} from '../../../models/user.model';
 import User = UserModel.User;
 import {UserService} from '../../../services/user.service';
@@ -8,6 +8,7 @@ import {RoundModel} from '../../../models/round.model';
 import Round = RoundModel.Round;
 import {MatchService} from '../../../services/match.service';
 import {RoundService} from '../../../services/round.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-match-base',
@@ -21,14 +22,6 @@ export class MatchBaseComponent implements OnInit {
   player_one_score = 0;
   player_two_score = 0;
 
-  constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private userService: UserService,
-              private matchService: MatchService,
-              private roundService: RoundService) {
-  }
-
-  myControl = new FormControl();
   @Input() title: string;
   @Input() edit: boolean;
 
@@ -37,6 +30,24 @@ export class MatchBaseComponent implements OnInit {
 
   competition_id: number;
   id: number;
+
+  form: FormGroup;
+  submitted = false;
+
+  constructor(private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private userService: UserService,
+              private matchService: MatchService,
+              private roundService: RoundService,
+              private fb: FormBuilder,
+              public snackBar: MatSnackBar) {
+    this.form = this.fb.group({
+    player_one: ['', Validators.required],
+    player_two: ['', Validators.required],
+  });
+}
+
+get f() { return this.form.controls; }
 
   ngOnInit() {
     this.competition_id = +this.activatedRoute.snapshot.paramMap.get('competition_id');
@@ -76,6 +87,16 @@ export class MatchBaseComponent implements OnInit {
   }
 
   saveMatch() {
+    this.submitted = true;
+    if (this.form.invalid) {
+      return;
+    }
+    if (this.rounds.length === 0) {
+      this.snackBar.open('Add at least one round to the match to save!', 'OK', {
+        duration: 2000,
+      });
+      return;
+    }
     this.matchService.update({
       competition_id: this.competition_id,
       id: this.id,

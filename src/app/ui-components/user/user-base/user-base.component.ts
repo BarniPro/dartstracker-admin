@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../../services/user.service';
-import {FormControl} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {Role} from '../../../models/user.model';
 import {map, startWith} from 'rxjs/operators';
@@ -17,9 +17,22 @@ export class UserBaseComponent implements OnInit {
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
-              private userService: UserService) { }
+              private userService: UserService,
+              private fb: FormBuilder) {
+    this.form = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      human_name: ['', Validators.required],
+      country: ['', Validators.required],
+      date_of_birth: ['', Validators.required]
+    });
+  }
 
-  myControl = new FormControl();
+  get f() { return this.form.controls; }
+
+  form: FormGroup;
+  submitted = false;
+
   @Input() title: string;
   @Input() edit: boolean;
 
@@ -64,7 +77,7 @@ export class UserBaseComponent implements OnInit {
   }
 
   loadFilteredCountries() {
-    this.filteredCountries = this.myControl.valueChanges
+    this.filteredCountries = this.form.get('country').valueChanges
       .pipe(
         startWith(''),
         map(value => this._filter(value))
@@ -84,6 +97,10 @@ export class UserBaseComponent implements OnInit {
   }
 
   saveUser() {
+    this.submitted = true;
+    if (this.form.invalid) {
+      return;
+    }
     if (this.edit) {
       this.userService.update({
         id: this.id,

@@ -49,7 +49,7 @@ export class MatchService {
   }
 
   delete(request: MatchModel.DeleteRequest) {
-    const url = '${this.baseUrl}/${request.competition_id}/matches/${request.id}/';
+    const url = this.baseUrl + '/' + request.competition_id + '/matches/' + request.id;
     return this.http
       .delete<Match>(url, this.httpOptions)
       .pipe(catchError(this.handleError));

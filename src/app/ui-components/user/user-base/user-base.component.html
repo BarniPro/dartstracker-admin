@@ -16,42 +16,57 @@
   <div class="row">
     <div class="offset-md-1 col-md-10">
       <form class="example-form">
-        <div class="row">
+        <form [formGroup]="form" class="row">
           <!-- REGION CARD -->
           <div class="col-md-6">
             <mat-card class="example-card mb-3">
               <h6>User Data</h6>
               <div>
                 <mat-form-field class="example-full-width">
-                  <input matInput placeholder="User Name" [(ngModel)]="username" name="username">
+                  <input matInput placeholder="User Name" [(ngModel)]="username" name="username" formControlName="username">
+                  <div *ngIf="submitted && form.get('username').hasError('required')" class="invalid-feedback d-block">
+                    <div>Username is required</div>
+                  </div>
                 </mat-form-field>
               </div>
               <div *ngIf="!edit">
                 <mat-form-field class="example-full-width">
-                  <input matInput placeholder="Password" [(ngModel)]="password" name="password">
+                  <input matInput placeholder="Password" [(ngModel)]="password" name="password" formControlName="password">
+                  <div *ngIf="submitted && form.get('password').hasError('required')" class="invalid-feedback d-block">
+                    <div>Password is required</div>
+                  </div>
                 </mat-form-field>
               </div>
               <div>
                 <mat-form-field class="example-full-width">
-                  <input matInput placeholder="Human Name" [(ngModel)]="human_name" name="human_name">
+                  <input matInput placeholder="Human Name" [(ngModel)]="human_name" name="human_name" formControlName="human_name">
+                  <div *ngIf="submitted && form.get('human_name').hasError('required')" class="invalid-feedback d-block">
+                    <div>Human name is required</div>
+                  </div>
                 </mat-form-field>
               </div>
               <div>
                 <mat-form-field class="example-full-width">
-                  <input type="text" placeholder="Country" aria-label="Country" matInput [formControl]="myControl" [(ngModel)]="country" name="country"
+                  <input type="text" placeholder="Country" aria-label="Country" matInput formControlName="country" [(ngModel)]="country" name="country"
                          [matAutocomplete]="auto">
                   <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
                       {{country}}
                     </mat-option>
                   </mat-autocomplete>
+                  <div *ngIf="submitted && form.get('country').hasError('required')" class="invalid-feedback d-block">
+                    <div>Country is required</div>
+                  </div>
                 </mat-form-field>
               </div>
               <div>
                 <mat-form-field class="w-100">
-                  <input matInput [matDatepicker]="picker" placeholder="Date of birth" [(ngModel)]="date_of_birth" name="date_of_birth">
+                  <input matInput [matDatepicker]="picker" placeholder="Date of birth" [(ngModel)]="date_of_birth" name="date_of_birth" formControlName="date_of_birth">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
+                  <div *ngIf="submitted && form.get('date_of_birth').hasError('required')" class="invalid-feedback d-block">
+                    <div>Date of birth is required</div>
+                  </div>
                 </mat-form-field>
               </div>
             </mat-card>
@@ -73,7 +88,7 @@
             </mat-card>
           </div>
           <!-- END REGION CARD -->
-        </div>
+        </form>
       </form>
     </div>
   </div>

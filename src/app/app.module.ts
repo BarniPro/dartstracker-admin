@@ -23,7 +23,7 @@ import {
   MatTableModule,
   MatRadioModule,
   MatSelect,
-  MatSelectModule
+  MatSelectModule, MatSnackBarModule
 } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {UserService} from './services/user.service';
@@ -95,7 +95,8 @@ import { RoundComponent } from './ui-components/round/round.component';
     MatCheckboxModule,
     MatTableModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
   ],
   providers: [
     UserService,
