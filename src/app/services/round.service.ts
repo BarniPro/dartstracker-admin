@@ -3,7 +3,8 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {throwError as observableThrowError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {MatchModel} from '../models/match.model';
-import Match = MatchModel.Match;
+import {RoundModel} from '../models/round.model';
+import Round = RoundModel.Round;
 
 @Injectable()
 export class RoundService {
@@ -20,38 +21,38 @@ export class RoundService {
   constructor(private http: HttpClient) {
   }
 
-  get(request: MatchModel.QueryRequest) {
-    const url = '${this.baseUrl}/${request.competition_id}/matches/${request.match_id}/rounds';
+  get(request: RoundModel.QueryRequest) {
+    const url = this.baseUrl + '/' + request.competition_id + '/matches/' + request.match_id + '/rounds';
     return this.http
-      .get<Match[]>(url, this.httpOptions)
+      .get<Round[]>(url, this.httpOptions)
       .pipe(map(data => data), catchError(this.handleError));
   }
 
-  getOne(request: MatchModel.GetRequest) {
+  getOne(request: RoundModel.GetRequest) {
     const url = '${this.baseUrl}/${request.competition_id}/matches/${request.match_id}/rounds/${request.id}';
     return this.http
-      .get<Match>(url, this.httpOptions)
+      .get<Round>(url, this.httpOptions)
       .pipe(map(data => data), catchError(this.handleError));
   }
 
-  create(request: MatchModel.CreateRequest) {
-    const url = '${this.baseUrl}/${request.competition_id}/matches/${request.match_id}/rounds';
+  create(request: RoundModel.CreateRequest) {
+    const url = this.baseUrl + '/' + request.competition_id + '/matches/' + request.match_id + '/rounds';
     return this.http
-      .post<Match>(url, request, this.httpOptions)
+      .post<Round>(url, request, this.httpOptions)
       .pipe(map(data => data), catchError(this.handleError));
   }
 
-  update(request: MatchModel.UpdateRequest) {
-    const url = '${this.baseUrl}/${request.competition_id}/matches/${request.match_id}/rounds/${request.id}';
+  update(request: RoundModel.UpdateRequest) {
+    const url = this.baseUrl + '/' + request.competition_id + '/matches/' + request.match_id + '/rounds/' + request.id;
     return this.http
-      .put<Match>(url, request, this.httpOptions)
+      .put<Round>(url, request, this.httpOptions)
       .pipe(map(data => data), catchError(this.handleError));
   }
 
-  delete(request: MatchModel.DeleteRequest) {
-    const url = '${this.baseUrl}/${request.competition_id}/matches/${request.match_id}/rounds/${request.id}';
+  delete(request: RoundModel.DeleteRequest) {
+    const url = this.baseUrl + '/' + request.competition_id + '/matches/' + request.match_id + '/rounds/' + request.id;
     return this.http
-      .delete<Match>(url, this.httpOptions)
+      .delete<Round>(url, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 

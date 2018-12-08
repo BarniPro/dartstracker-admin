@@ -47,6 +47,7 @@ import { UserCreateComponent } from './ui-components/user/user-create/user-creat
 import { UserEditComponent } from './ui-components/user/user-edit/user-edit.component';
 import {RolePipe} from './services/role.pipe';
 import { UserBaseComponent } from './ui-components/user/user-base/user-base.component';
+import { RoundComponent } from './ui-components/round/round.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { UserBaseComponent } from './ui-components/user/user-base/user-base.comp
     UserCreateComponent,
     UserEditComponent,
     RolePipe,
-    UserBaseComponent
+    UserBaseComponent,
+    RoundComponent
   ],
   imports: [
     RouterModule.forRoot(

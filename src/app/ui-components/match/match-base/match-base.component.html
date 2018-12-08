@@ -23,7 +23,8 @@
               <h6>Basic Data</h6>
               <div>
                 <mat-form-field class="w-100">
-                  <mat-select [(ngModel)]="player_one" [compareWith]="compareUser" placeholder="Player 1" [ngModelOptions]="{standalone: true}">
+                  <mat-select [(ngModel)]="player_one" [compareWith]="compareUser" placeholder="Player 1"
+                              [ngModelOptions]="{standalone: true}">
                     <mat-option *ngFor="let player of players" [value]="player">{{player.human_name}}</mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -31,7 +32,8 @@
               </div>
               <div>
                 <mat-form-field class="w-100">
-                  <mat-select [(ngModel)]="player_two" [compareWith]="compareUser" placeholder="Player 2" [ngModelOptions]="{standalone: true}">
+                  <mat-select [(ngModel)]="player_two" [compareWith]="compareUser" placeholder="Player 2"
+                              [ngModelOptions]="{standalone: true}">
                     <mat-option *ngFor="let player of players" [value]="player">{{player.human_name}}</mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -41,9 +43,24 @@
           </div>
           <!-- END REGION CARD -->
           <!-- REGION CARD -->
-          <div class="col-md-6">
+          <div class="col-md-6" *ngIf="player_one && player_two">
             <mat-card class="example-card">
               <h6 class="mb-3">Rounds</h6>
+              <app-round *ngFor="let round of rounds; let i = index"
+                         [player_one_name]="player_one.human_name"
+                         [player_two_name]="player_two.human_name"
+                         [round]="round"
+                         [round_number]="i+1"
+                         [competition_id]="competition_id"
+                         [match_id]="id"
+                         (round_updated)="loadRounds()">
+              </app-round>
+              <div class="d-flex justify-content-between mt-3">
+                <p class="mb-0">Add round</p>
+                <span>
+                  <mat-icon class="cursor-pointer" (click)="addRound()">add</mat-icon>
+                </span>
+              </div>
             </mat-card>
           </div>
           <!-- END REGION CARD -->

@@ -1,0 +1,75 @@
+<div class="d-flex justify-content-between mt-3">
+  <h4>Round {{round_number}}</h4>
+  <span>
+    <mat-icon *ngIf="!edit" class="cursor-pointer" (click)="setEdit()">edit</mat-icon>
+    <mat-icon *ngIf="edit" class="cursor-pointer" (click)="saveRound()" color="primary">save</mat-icon>
+    <mat-icon class="cursor-pointer" (click)="deleteRound()" color="warn">delete</mat-icon>
+  </span>
+</div>
+<ng-container *ngIf="!edit">
+  <div class="d-flex justify-content-between">
+    <div>
+      <p class="mb-0" [ngClass]="{'color-green' : winner() === 'player_one'}">
+        {{player_one_name}} ({{round.player_one_throw_one + round.player_one_throw_two + round.player_one_throw_three}})
+      </p>
+      <p>{{round.player_one_throw_one}}, {{round.player_one_throw_two}}, {{round.player_one_throw_three}}</p>
+    </div>
+    <div>
+      <p class="mb-0" [ngClass]="{'color-green' : winner() === 'player_two'}">
+        {{player_two_name}} ({{round.player_two_throw_one + round.player_two_throw_two + round.player_two_throw_three}})
+      </p>
+      <p>{{round.player_two_throw_one}}, {{round.player_two_throw_two}}, {{round.player_two_throw_three}}</p>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="edit">
+  <div class="d-flex justify-content-between">
+    <div>
+      <p [ngClass]="{'color-green' : winner() === 'player_one'}">
+        {{player_one_name}} ({{round.player_one_throw_one + round.player_one_throw_two + round.player_one_throw_three}})
+      </p>
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput type="number" placeholder="Throw 1" [(ngModel)]="round.player_one_throw_one" name="player_one_throw_one"
+                 (focusout)="normalize()">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput type="number" placeholder="Throw 2" [(ngModel)]="round.player_one_throw_two" name="player_one_throw_two"
+                 (focusout)="normalize()">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput type="number" placeholder="Throw 3" [(ngModel)]="round.player_one_throw_three" name="player_one_throw_three"
+                 (focusout)="normalize()">
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <p [ngClass]="{'color-green' : winner() === 'player_two'}">
+        {{player_two_name}} ({{round.player_two_throw_one + round.player_two_throw_two + round.player_two_throw_three}})
+      </p>
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput type="number" placeholder="Throw 1" [(ngModel)]="round.player_two_throw_one" name="player_two_throw_one"
+                 (focusout)="normalize()">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput type="number" placeholder="Throw 2" [(ngModel)]="round.player_two_throw_two" name="player_two_throw_two"
+                 (focusout)="normalize()">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput type="number" placeholder="Throw 3" [(ngModel)]="round.player_two_throw_three" name="player_two_throw_three"
+                 (focusout)="normalize()">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</ng-container>

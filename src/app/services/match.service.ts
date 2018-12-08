@@ -42,7 +42,7 @@ export class MatchService {
   }
 
   update(request: MatchModel.UpdateRequest) {
-    const url = '${this.baseUrl}/${request.competition_id}/matches/${request.id}/';
+    const url = this.baseUrl + '/' + request.competition_id + '/matches/' + request.id;
     return this.http
       .put<Match>(url, request, this.httpOptions)
       .pipe(map(data => data), catchError(this.handleError));
