@@ -3,6 +3,7 @@ import {UserModel} from '../../../models/user.model';
 import User = UserModel.User;
 import {UserService} from '../../../services/user.service';
 import {Router} from '@angular/router';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-user-list',
@@ -15,7 +16,12 @@ export class UserListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'username', 'human_name', 'country', 'date_of_birth', 'role', 'actions'];
 
   constructor(private userService: UserService,
-              private router: Router) { }
+              private router: Router,
+              private authService: AuthService) { }
+
+  hasRight(rightName: string) {
+    return this.authService.hasRight(rightName);
+  }
 
   ngOnInit() {
     this.loadUsers();

@@ -2,7 +2,7 @@
   <mat-toolbar-row>
     <span>{{users.length}} registered users</span>
     <span class="example-spacer"></span>
-    <button mat-button (click)="navigate('/users/create')">
+    <button [disabled]="!hasRight('userModify')" mat-button (click)="navigate('/users/create')">
       <mat-icon>person_add</mat-icon>
       <span class="pl-1">Add user</span>
     </button>
