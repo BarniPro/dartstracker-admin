@@ -4,6 +4,7 @@ import {MatchModel} from '../../../models/match.model';
 import Match = MatchModel.Match;
 import {MatchService} from '../../../services/match.service';
 import {countryList} from '../../../services/country';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-match-list',
@@ -17,7 +18,12 @@ export class MatchListComponent implements OnInit {
 
   constructor(private matchService: MatchService,
               private router: Router,
-              private activatedRoute: ActivatedRoute) { }
+              private activatedRoute: ActivatedRoute,
+              private authService: AuthService) { }
+
+  hasRight(rightName: string) {
+    return this.authService.hasRight(rightName);
+  }
 
   ngOnInit() {
     this.competition_id = +this.activatedRoute.snapshot.paramMap.get('competition_id');
