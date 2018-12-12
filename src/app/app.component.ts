@@ -6,6 +6,7 @@ import {CompetitionService} from './services/competition.service';
 import {CompetitionModel} from './models/competition.model';
 import Competition = CompetitionModel.Competition;
 import {Router} from '@angular/router';
+import {AuthService} from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -21,12 +22,21 @@ export class AppComponent implements OnInit {
 
   constructor(private userService: UserService,
               private competitionService: CompetitionService,
-              private router: Router) {}
+              private router: Router,
+              private authService: AuthService) {}
 
   ngOnInit(): void {
+    if (!(window.localStorage.getItem('token'))) {
+      this.navigate('login');
+    }
   }
 
   navigate(url: string) {
     this.router.navigateByUrl(url);
+  }
+
+  logout() {
+    this.authService.logout();
+    this.navigate('login');
   }
 }
