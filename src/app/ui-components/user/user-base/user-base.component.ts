@@ -7,6 +7,7 @@ import {Role} from '../../../models/user.model';
 import {map, startWith} from 'rxjs/operators';
 import {countryList} from '../../../services/country';
 import * as moment from 'moment';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-user-base',
@@ -14,21 +15,6 @@ import * as moment from 'moment';
   styleUrls: ['./user-base.component.css']
 })
 export class UserBaseComponent implements OnInit {
-
-  constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private userService: UserService,
-              private fb: FormBuilder) {
-    this.form = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      human_name: ['', Validators.required],
-      country: ['', Validators.required],
-      date_of_birth: ['', Validators.required]
-    });
-  }
-
-  get f() { return this.form.controls; }
 
   form: FormGroup;
   submitted = false;
@@ -49,6 +35,25 @@ export class UserBaseComponent implements OnInit {
   country: string;
   date_of_birth: Date;
 
+  constructor(private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private userService: UserService,
+              private fb: FormBuilder,
+              private authService: AuthService) {
+    this.form = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      human_name: ['', Validators.required],
+      country: ['', Validators.required],
+      date_of_birth: ['', Validators.required]
+    });
+  }
+
+  hasRight(rightName: string) {
+    return this.authService.hasRight(rightName);
+  }
+
+  get f() { return this.form.controls; }
   ngOnInit() {
     this.role = this.roles[0];
     if (this.edit) {
