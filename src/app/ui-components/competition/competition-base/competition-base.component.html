@@ -6,7 +6,7 @@
       <mat-icon>close</mat-icon>
       <span class="pl-1">Discard</span>
     </button>
-    <button mat-button (click)="saveCompetition()">
+    <button mat-button [disabled]="!hasRight('competitionModify')" (click)="saveCompetition()">
       <mat-icon>done</mat-icon>
       <span class="pl-1">Save</span>
     </button>

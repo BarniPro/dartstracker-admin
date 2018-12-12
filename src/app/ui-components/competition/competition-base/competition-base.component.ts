@@ -11,6 +11,7 @@ import {CompetitionService} from '../../../services/competition.service';
 import * as moment from 'moment';
 import {forkJoin} from 'rxjs';
 import {MatSnackBar} from '@angular/material';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-competition-base',
@@ -42,13 +43,18 @@ export class CompetitionBaseComponent implements OnInit {
               private userService: UserService,
               private competitionService: CompetitionService,
               private fb: FormBuilder,
-              public snackBar: MatSnackBar) {
+              public snackBar: MatSnackBar,
+              private authService: AuthService) {
     this.form = this.fb.group({
       cName: ['', Validators.required],
       cCountry: ['', Validators.required],
       cStartDate: ['', Validators.required],
       cEndDate: ['', Validators.required],
     });
+  }
+
+  hasRight(rightName: string) {
+    return this.authService.hasRight(rightName);
   }
 
   get f() { return this.form.controls; }
