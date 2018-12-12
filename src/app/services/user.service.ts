@@ -4,53 +4,49 @@ import {UserModel} from '../models/user.model';
 import {throwError as observableThrowError} from 'rxjs';
 import User = UserModel.User;
 import {catchError, map} from 'rxjs/operators';
+import {httpOptions} from './auth.service';
 
 @Injectable()
 export class UserService {
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Basic YWRtaW46MTIzNA==', // admin/password
-    })
-  };
-
   private baseUrl = 'http://localhost:8080/users';
 
   constructor(private http: HttpClient) {
+    const token = window.localStorage.getItem('token');
+    httpOptions.headers = httpOptions.headers.set('Authorization', 'Basic ' + token);
   }
 
   get() {
     return this.http
-      .get<User[]>(this.baseUrl, this.httpOptions)
+      .get<User[]>(this.baseUrl, httpOptions)
       .pipe(map(data => data), catchError(this.handleError));
   }
 
   getOne(request: UserModel.GetRequest) {
     const url = this.baseUrl + '/' + request.id;
     return this.http
-      .get<User>(url, this.httpOptions)
+      .get<User>(url, httpOptions)
       .pipe(map(data => data), catchError(this.handleError));
   }
 
   create(request: UserModel.CreateRequest) {
     const url = this.baseUrl;
     return this.http
-      .post<User>(url, request, this.httpOptions)
+      .post<User>(url, request, httpOptions)
       .pipe(map(data => data), catchError(this.handleError));
   }
 
   update(request: UserModel.UpdateRequest) {
     const url = this.baseUrl + '/' + request.id;
     return this.http
-      .put<User>(url, request, this.httpOptions)
+      .put<User>(url, request, httpOptions)
       .pipe(map(data => data), catchError(this.handleError));
   }
 
   delete(request: UserModel.DeleteRequest) {
     const url = '${this.baseUrl}/${request.id}';
     return this.http
-      .delete<User>(url, this.httpOptions)
+      .delete<User>(url, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

@@ -8,6 +8,7 @@ import {UserEditComponent} from '../ui-components/user/user-edit/user-edit.compo
 import {MatchListComponent} from '../ui-components/match/match-list/match-list.component';
 import {MatchCreateComponent} from '../ui-components/match/match-create/match-create.component';
 import {MatchEditComponent} from '../ui-components/match/match-edit/match-edit.component';
+import {LoginComponent} from '../ui-components/login/login.component';
 
 export const appRoutes: Routes = [
   { path: 'competitions', component: CompetitionListComponent },
@@ -19,6 +20,7 @@ export const appRoutes: Routes = [
   { path: 'users', component: UserListComponent },
   { path: 'users/create', component: UserCreateComponent },
   { path: 'users/:id/edit', component: UserEditComponent },
+  { path: 'login', component: LoginComponent },
   { path: '',
     redirectTo: '/competitions',
     pathMatch: 'full'
