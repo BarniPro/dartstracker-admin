@@ -1,9 +1,9 @@
 <div class="d-flex justify-content-between mt-3">
   <h4>Round {{round_number}}</h4>
   <span>
-    <mat-icon *ngIf="!edit" class="cursor-pointer" (click)="setEdit()">edit</mat-icon>
-    <mat-icon *ngIf="edit" class="cursor-pointer" (click)="saveRound()" color="primary">save</mat-icon>
-    <mat-icon class="cursor-pointer" (click)="deleteRound()" color="warn">delete</mat-icon>
+    <mat-icon *ngIf="!edit && hasRight('matchModify')" class="cursor-pointer" (click)="setEdit()">edit</mat-icon>
+    <mat-icon *ngIf="edit && hasRight('matchModify')" class="cursor-pointer" (click)="saveRound()" color="primary">save</mat-icon>
+    <mat-icon *ngIf="hasRight('matchModify')" class="cursor-pointer" (click)="deleteRound()" color="warn">delete</mat-icon>
   </span>
 </div>
 <ng-container *ngIf="!edit">

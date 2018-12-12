@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {RoundModel} from '../../models/round.model';
 import Round = RoundModel.Round;
 import {RoundService} from '../../services/round.service';
+import {Router} from '@angular/router';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-round',
@@ -19,7 +21,12 @@ export class RoundComponent implements OnInit {
   @Input() match_id;
   @Output() round_updated: EventEmitter<any> = new EventEmitter();
 
-  constructor(private roundService: RoundService) { }
+  constructor(private roundService: RoundService,
+              private authService: AuthService) { }
+
+  hasRight(rightName: string) {
+    return this.authService.hasRight(rightName);
+  }
 
   ngOnInit() {
   }
