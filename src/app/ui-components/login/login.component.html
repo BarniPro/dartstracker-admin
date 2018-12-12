@@ -1,3 +1,48 @@
-<p>
-  login works!
-</p>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>Log In</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="p-3">
+  <div class="row">
+    <div class="offset-md-1 col-md-10">
+
+      <div class="col-md-6 offset-md-3">
+        <mat-card class="p-4">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+            <div class="row">
+              <div *ngIf="message">
+                {{ message }}
+              </div>
+            </div>
+
+            <div class="row">
+              <mat-form-field class="w-100">
+                <input matInput placeholder="Username" formControlName="username" required [(ngModel)]="username">
+                <mat-error *ngIf="form.get('username').hasError('required')">Username is required</mat-error>
+              </mat-form-field>
+            </div>
+
+
+            <div class="row">
+              <mat-form-field class="w-100">
+                <input matInput placeholder="Password" formControlName="password" required
+                       [type]="hidePassword ? 'password' : 'text'"
+                       [(ngModel)]="password">
+                <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' :
+                  'visibility'}}
+                </mat-icon>
+                <mat-error *ngIf="form.get('password').hasError('required')">Password is required</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="d-flex justify-content-end">
+              <button mat-flat-button type="submit" color="primary" [disabled]="form.invalid">Log In</button>
+            </div>
+          </form>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
