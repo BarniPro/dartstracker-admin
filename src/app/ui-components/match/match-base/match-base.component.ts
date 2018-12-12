@@ -9,6 +9,7 @@ import Round = RoundModel.Round;
 import {MatchService} from '../../../services/match.service';
 import {RoundService} from '../../../services/round.service';
 import {MatSnackBar} from '@angular/material';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-match-base',
@@ -40,12 +41,17 @@ export class MatchBaseComponent implements OnInit {
               private matchService: MatchService,
               private roundService: RoundService,
               private fb: FormBuilder,
-              public snackBar: MatSnackBar) {
+              public snackBar: MatSnackBar,
+              private authService: AuthService) {
     this.form = this.fb.group({
     player_one: ['', Validators.required],
     player_two: ['', Validators.required],
   });
 }
+
+  hasRight(rightName: string) {
+    return this.authService.hasRight(rightName);
+  }
 
 get f() { return this.form.controls; }
 

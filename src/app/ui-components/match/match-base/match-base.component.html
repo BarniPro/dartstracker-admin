@@ -6,7 +6,7 @@
       <mat-icon>close</mat-icon>
       <span class="pl-1">Discard</span>
     </button>
-    <button mat-button (click)="saveMatch()">
+    <button [disabled]="!hasRight('matchModify')" mat-button (click)="saveMatch()">
       <mat-icon>done</mat-icon>
       <span class="pl-1">Save</span>
     </button>
@@ -64,7 +64,7 @@
                          [match_id]="id"
                          (round_updated)="loadRounds()">
               </app-round>
-              <div class="d-flex justify-content-between mt-3">
+              <div *ngIf="hasRight('matchModify')" class="d-flex justify-content-between mt-3">
                 <p class="mb-0">Add round</p>
                 <span>
                   <mat-icon class="cursor-pointer" (click)="addRound()">add</mat-icon>
