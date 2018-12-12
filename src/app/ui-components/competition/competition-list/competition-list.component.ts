@@ -6,6 +6,7 @@ import {countryList} from '../../../services/country';
 import {Router} from '@angular/router';
 import {UserModel} from '../../../models/user.model';
 import User = UserModel.User;
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-competition-list',
@@ -17,7 +18,12 @@ export class CompetitionListComponent implements OnInit {
   competitions: Competition[] = [];
 
   constructor(private competitionService: CompetitionService,
-              private router: Router) { }
+              private router: Router,
+              private authService: AuthService) { }
+
+  hasRight(rightName: string) {
+    return this.authService.hasRight(rightName);
+  }
 
   ngOnInit() {
     this.loadCompetitions();

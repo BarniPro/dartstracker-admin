@@ -2,7 +2,7 @@
   <mat-toolbar-row>
     <span>{{competitions.length}} competitions</span>
     <span class="example-spacer"></span>
-    <button mat-button (click)="navigate('/competitions/create')">
+    <button mat-button [disabled]="!hasRight('competitionModify')" (click)="navigate('/competitions/create')">
       <mat-icon>library_add</mat-icon>
       <span class="pl-1">Add competition</span>
     </button>
@@ -49,7 +49,7 @@
                   <button mat-button (click)="navigate('/competitions/' + competition.id + '/matches')">VIEW MATCHES</button>
                   <button mat-button color="primary" (click)="navigate('/competitions/' + competition.id + '/edit')">EDIT</button>
                 </div>
-                <button mat-button color="warn" (click)="deleteCompetition(competition.id)">DELETE</button>
+                <button mat-button color="warn" [disabled]="!hasRight('competitionModify')" (click)="deleteCompetition(competition.id)">DELETE</button>
               </div>
             </mat-card-actions>
           </mat-card>
